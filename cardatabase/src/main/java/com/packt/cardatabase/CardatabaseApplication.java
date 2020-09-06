@@ -9,6 +9,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+
+import java.util.Arrays;
 
 @SpringBootApplication
 public class CardatabaseApplication {
@@ -26,9 +30,15 @@ public class CardatabaseApplication {
     @Bean
     CommandLineRunner runner() {
         return args -> {
-            carRepository.save(new Car("Tesla", "Model S", "Space Grey", "DGB-3333", 2020, 50000));
+            carRepository.save(new Car("Tesla", "Model S", "Space Grey", "DGB-3333", 2020, 30000));
+            carRepository.save(new Car("Tesla", "Model X", "Black", "DGS-5555", 2018, 63000));
+            carRepository.save(new Car("Tesla", "Model X", "White", "DGS-6666", 2017, 63000));
             carRepository.save(new Car("Ford", "Mustang", "Red", "AAG-1234", 2014, 59000));
             carRepository.save(new Car("Toyota", "Prius", "Silver", "KKO-0212", 2018, 39000));
+
+            logger.info("findByBrandContains(): {}", carRepository.findByBrandContains("yo"));
+            logger.info("findByBrandOrderByYearAsc(): {}", carRepository.findByBrandOrderByYearAsc("Tesla"));
+            logger.info("findAll() with sorting: {}", carRepository.findAll(Sort.by(Sort.Direction.ASC, "brand", "model", "year")));
         };
     }
 
