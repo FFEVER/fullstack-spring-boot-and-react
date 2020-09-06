@@ -8,6 +8,7 @@ import javax.persistence.Id;
 
 @Entity
 public class Car {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -23,6 +24,7 @@ public class Car {
     }
 
     public Car(String brand, String model, String color, String registerNumber, Integer year, Integer price) {
+        super();
         this.brand = brand;
         this.model = model;
         this.color = color;
