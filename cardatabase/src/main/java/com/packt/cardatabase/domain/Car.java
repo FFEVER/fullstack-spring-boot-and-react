@@ -15,7 +15,6 @@ public class Car {
     private String brand;
     private String model;
     private String color;
-    @Column(name = "register_number", nullable = false)
     private String registerNumber;
     private Integer year;
     private Integer price;
