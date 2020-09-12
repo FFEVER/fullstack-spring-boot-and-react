@@ -2,23 +2,28 @@ package com.packt.cardatabase.domain;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import java.util.List;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Owner {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long ownerId;
+    private Long id;
     private String firstName;
     private String lastName;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "owner")
-    List<Car> cars;
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @JoinTable(name = "car_owner",
+            joinColumns = {@JoinColumn(name = "owner_id")},
+            inverseJoinColumns = {@JoinColumn(name = "car_id")})
+    Set<Car> cars = new HashSet<>();
 
     public Owner() {
     }
@@ -29,12 +34,12 @@ public class Owner {
         this.lastName = lastName;
     }
 
-    public Long getOwnerId() {
-        return ownerId;
+    public Long getId() {
+        return id;
     }
 
-    public void setOwnerId(Long ownerId) {
-        this.ownerId = ownerId;
+    public void setId(Long ownerId) {
+        this.id = ownerId;
     }
 
     public String getFirstName() {
@@ -53,18 +58,18 @@ public class Owner {
         this.lastName = lastName;
     }
 
-    public List<Car> getCars() {
+    public Set<Car> getCars() {
         return cars;
     }
 
-    public void setCars(List<Car> cars) {
+    public void setCars(Set<Car> cars) {
         this.cars = cars;
     }
 
     @Override
     public String toString() {
         return "Owner{" +
-                "ownerId=" + ownerId +
+                "ownerId=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 '}';
