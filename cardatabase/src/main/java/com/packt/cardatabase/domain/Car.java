@@ -93,8 +93,12 @@ public class Car {
         return owners;
     }
 
-    public void addOwners(Owner owner) {
-        owners.add(owner);
+    public void setOwners(Set<Owner> owners) {
+        owners.forEach(this::addOwner);
+    }
+
+    public void addOwner(Owner owner) {
+        this.owners.add(owner);
         owner.getCars().add(this);
     }
 

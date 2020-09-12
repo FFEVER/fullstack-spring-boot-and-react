@@ -63,7 +63,12 @@ public class Owner {
     }
 
     public void setCars(Set<Car> cars) {
-        this.cars = cars;
+        cars.forEach(this::addCars);
+    }
+
+    public void addCars(Car car) {
+        this.cars.add(car);
+        car.getOwners().add(this);
     }
 
     @Override
