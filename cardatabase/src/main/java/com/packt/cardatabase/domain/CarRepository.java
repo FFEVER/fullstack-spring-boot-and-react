@@ -1,8 +1,8 @@
 package com.packt.cardatabase.domain;
 
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import java.util.List;
 
@@ -11,6 +11,7 @@ Using PagingAndSortingRepository offers method to fetch entities using paginatio
 - Iterable<T> findAll(Sort sort)  Returns all entities sorted by the given options
 - Page<T> findAll(Pageable pageable)  Returns all entities according to given paging options
  */
+@RepositoryRestResource
 public interface CarRepository extends PagingAndSortingRepository<Car, Long> {
 
     // Fetch cars by brand

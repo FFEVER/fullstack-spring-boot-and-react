@@ -1,5 +1,8 @@
 package com.packt.cardatabase.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,6 +15,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Owner {
 
     @Id
@@ -20,6 +24,7 @@ public class Owner {
     private String firstName;
     private String lastName;
     @ManyToMany(cascade = CascadeType.MERGE)
+    @JsonIgnore
     @JoinTable(name = "car_owner",
             joinColumns = {@JoinColumn(name = "owner_id")},
             inverseJoinColumns = {@JoinColumn(name = "car_id")})
