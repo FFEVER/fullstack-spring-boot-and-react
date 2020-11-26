@@ -41,6 +41,10 @@ public class Car {
         this.price = price;
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public String getBrand() {
         return brand;
     }

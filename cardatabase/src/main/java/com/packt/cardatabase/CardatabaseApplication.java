@@ -4,6 +4,8 @@ import com.packt.cardatabase.domain.Car;
 import com.packt.cardatabase.domain.CarRepository;
 import com.packt.cardatabase.domain.Owner;
 import com.packt.cardatabase.domain.OwnerRepository;
+import com.packt.cardatabase.domain.User;
+import com.packt.cardatabase.domain.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +14,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @SpringBootApplication
 public class CardatabaseApplication {
@@ -27,6 +29,8 @@ public class CardatabaseApplication {
     private CarRepository carRepository;
     @Autowired
     private OwnerRepository ownerRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(CardatabaseApplication.class, args);
@@ -61,6 +65,15 @@ public class CardatabaseApplication {
             logger.info("findByBrandContains(): {}", carRepository.findByBrandContains("yo"));
             logger.info("findByBrandOrderByYearAsc(): {}", carRepository.findByBrandOrderByYearAsc("Tesla"));
             logger.info("findAll() with sorting: {}", carRepository.findAll(Sort.by(Sort.Direction.ASC, "brand", "model", "year")));
+
+            // username: user, password: user
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+            User user = new User("user", encoder.encode("user"), "USER");
+            userRepository.save(user);
+
+            // username: admin, password: admin
+            User admin = new User("admin", encoder.encode("admin"), "ADMIN");
+            userRepository.save(admin);
         };
     }
 
